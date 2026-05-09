@@ -1,0 +1,55 @@
+﻿@model HRHelper.Models.JobPosition
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container pb-5">
+    <a asp-controller="Home" asp-action="Index" class="text-muted text-decoration-none small mb-4 d-inline-block">
+        ←Dashboard
+    </a>
+
+    <div class="details-container">
+        <div class="job-header-badge @(Model.Department == "IT" ? "bg-dark text-white" : "bg-danger text-white")">
+            @Model.Department
+        </div>
+
+        <h1 class="title-large">@Model.Title</h1>
+
+        <div class="mb-5">
+            <span class="section-label">Description</span>
+            <p class="content-text">@Model.Description</p>
+        </div>
+
+        <div class="info-grid">
+            <div>
+                <span class="section-label">Must Have</span>
+                <p class="content-text" style="font-size: 1rem;">@Model.MustHave</p>
+            </div>
+            <div>
+                <span class="section-label">Tehnologies</span>
+                <p class="content-text" style="font-size: 1rem;">@Model.Technologies</p>
+            </div>
+        </div>
+
+        <hr class="my-5 opacity-25">
+
+        <div class="mb-5">
+            <span class="section-label">Interview Guide</span>
+            <p class="content-text">@Model.InterviewGuide</p>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="#" class="btn-luxury-red px-5 py-3 fs-5 text-decoration-none d-inline-block shadow">
+                Test your Knowledge
+            </a>
+            
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+            {
+                <div class="mt-4">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-link text-muted btn-sm">Edit Position</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

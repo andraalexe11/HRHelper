@@ -1,0 +1,94 @@
+﻿@model IEnumerable<HRHelper.Models.JobPosition>
+
+<div class="container py-5">
+    <div class="row g-4 justify-content-center">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm job-card-luxury @(item.Department == "IT" ? "card-it-luxury text-white" : "card-hr-luxury text-white")">
+                        <div class="card-body d-flex flex-column p-4">
+                            <span class="badge mb-2">@item.Department</span>
+                            <h3 class="fw-bold">@item.Title</h3>
+                            <a href="@Url.Action("Details", "JobPositions", new { id = item.Id })" class="text-white mt-auto text-decoration-none text-center">Details→</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-8 text-center py-5">
+                <div class="p-5 border rounded-5 bg-light shadow-sm">
+                    <h3 class="text-muted fw-light">No available positions.</h3>
+                    <p class="text-secondary">We are working on it!</p>
+                </div>
+            </div>
+        }
+
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <div class="col-lg-4 col-md-6 d-flex justify-content-center">
+                <div class="hr-card-main w-100 bg-add-light cursor-pointer"
+                     data-bs-toggle="modal" data-bs-target="#addJobModal" style="cursor: pointer;">
+                    <div class="display-1 fw-light text-danger">+</div>
+                    <p class="fw-bold fs-5">Add Position</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="addJobModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 24px; border: none; padding: 20px;">
+            <div class="modal-header border-0">
+                <h4 class="modal-title fw-bold">Adaugă o poziție nouă</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="JobPositions" asp-action="Create" method="post">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Titlu Job</label>
+                            <input name="Title" class="form-control luxury-input" required placeholder="ex: Software Developer" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Department</label>
+                            <select name="Department" class="form-select luxury-input">
+                                <option value="IT">IT</option>
+                                <option value="HR">HR</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Description</label>
+                        <textarea name="Description" class="form-control luxury-input" rows="3"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Must Have</label>
+                            <textarea name="MustHave" class="form-control luxury-input" rows="2"></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Technologies</label>
+                            <textarea name="Technologies" class="form-control luxury-input" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Interview Guide</label>
+                        <textarea name="InterviewGuide" class="form-control luxury-input" rows="2"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn-luxury-red w-100">Save Position</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
