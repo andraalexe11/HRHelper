@@ -1,0 +1,53 @@
+@model HRHelper.Models.TakeQuizViewModel
+
+@{
+    ViewData["Title"] = $"Quiz — {Model.JobPositionTitle}";
+}
+
+<div class="container pb-5">
+    <div class="text-center mb-4">
+        <span class="section-label">Quiz</span>
+        <h2 class="fw-bold mb-1">@Model.JobPositionTitle</h2>
+        <p class="text-muted small">Answer all 3 questions, then submit.</p>
+    </div>
+
+    <div asp-validation-summary="All" class="alert alert-danger small" style="display: @(ViewData.ModelState.ErrorCount == 0 ? "none" : "block")"></div>
+
+    <form asp-controller="Quiz" asp-action="Submit" asp-route-attemptId="@Model.AttemptId" method="post">
+        @Html.AntiForgeryToken()
+
+        @for (int i = 0; i < Model.Questions.Count; i++)
+        {
+            var q = Model.Questions[i];
+            <div class="login-card mb-4">
+                <div class="d-flex align-items-baseline mb-3">
+                    <span class="badge bg-danger me-3 fs-6">@q.DisplayOrder</span>
+                    <h5 class="fw-bold mb-0">@q.Text</h5>
+                </div>
+
+                <input type="hidden" name="Answers[@i].QuestionId" value="@q.QuestionId" />
+
+                <div class="d-grid gap-2">
+                    @foreach (var opt in q.Options)
+                    {
+                        var inputId = $"q{q.QuestionId}_{opt.Letter}";
+                        <div class="form-check option-card border rounded-3 p-3">
+                            <input class="form-check-input" type="radio"
+                                   name="Answers[@i].SelectedOption"
+                                   id="@inputId"
+                                   value="@opt.Letter"
+                                   required />
+                            <label class="form-check-label ms-2 w-100" for="@inputId">
+                                @opt.Text
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="d-flex justify-content-center mt-4">
+            <button type="submit" class="btn-luxury-red px-5 py-3 fs-5">Submit Quiz</button>
+        </div>
+    </form>
+</div>

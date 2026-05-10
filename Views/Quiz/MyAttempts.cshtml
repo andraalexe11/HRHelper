@@ -1,0 +1,85 @@
+@model IEnumerable<HRHelper.Models.QuizAttempt>
+
+@{
+    ViewData["Title"] = "My Attempts";
+}
+
+<div class="container pb-5">
+    <div class="text-center mb-4">
+        <span class="section-label">Quiz History</span>
+        <h2 class="fw-bold">My Attempts</h2>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 border rounded-4 bg-light">
+            <h4 class="text-muted fw-light">No quiz attempts yet.</h4>
+            <p class="text-secondary">
+                Pick a position from the
+                <a asp-controller="Home" asp-action="Index" class="text-danger fw-bold text-decoration-none">dashboard</a>
+                and click "Test your Knowledge".
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="text-secondary small text-uppercase">
+                    <tr>
+                        <th>Position</th>
+                        <th>Started</th>
+                        <th>Score</th>
+                        <th>Result</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@(a.JobPosition?.Title ?? "—")</td>
+                            <td class="text-muted small">@a.StartedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>
+                                @if (a.CompletedAt.HasValue)
+                                {
+                                    <strong>@a.Score / 3</strong>
+                                }
+                                else
+                                {
+                                    <em class="text-muted">In progress</em>
+                                }
+                            </td>
+                            <td>
+                                @if (!a.CompletedAt.HasValue)
+                                {
+                                    <span class="badge bg-secondary">Unfinished</span>
+                                }
+                                else if (a.Passed)
+                                {
+                                    <span class="badge bg-success">Passed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Failed</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                @if (a.CompletedAt.HasValue)
+                                {
+                                    <a asp-controller="Quiz" asp-action="Result" asp-route-attemptId="@a.Id"
+                                       class="btn btn-link btn-sm text-secondary text-decoration-none">View</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Quiz" asp-action="Take" asp-route-attemptId="@a.Id"
+                                       class="btn btn-link btn-sm text-danger text-decoration-none">Resume</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -39,17 +39,56 @@
             <p class="content-text">@Model.InterviewGuide</p>
         </div>
 
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <div class="text-muted small border-top pt-3 mb-4">
+                <div>
+                    Created @Model.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+                    @if (!string.IsNullOrEmpty(Model.CreatedByEmail))
+                    {
+                        <span>by <strong>@Model.CreatedByEmail</strong></span>
+                    }
+                </div>
+                @if (Model.UpdatedAt.HasValue)
+                {
+                    <div>
+                        Last edited @Model.UpdatedAt.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+                        @if (!string.IsNullOrEmpty(Model.UpdatedByEmail))
+                        {
+                            <span>by <strong>@Model.UpdatedByEmail</strong></span>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
         <div class="text-center mt-5">
-            <a href="#" class="btn-luxury-red px-5 py-3 fs-5 text-decoration-none d-inline-block shadow">
-                Test your Knowledge
-            </a>
-            
+            @if (Model.QuestionCount >= 5)
+            {
+                <a asp-controller="Quiz" asp-action="Start" asp-route-jobPositionId="@Model.Id"
+                   class="btn-luxury-red px-5 py-3 fs-5 text-decoration-none d-inline-block shadow">
+                    Test your Knowledge
+                </a>
+            }
+            else
+            {
+                <button type="button"
+                        class="btn-luxury-red px-5 py-3 fs-5 d-inline-block shadow disabled"
+                        style="opacity: 0.55; cursor: not-allowed;"
+                        data-bs-toggle="tooltip"
+                        title="Quiz not available yet">
+                    Test your Knowledge
+                </button>
+                <div class="text-muted small mt-2">Quiz not available yet — needs at least 5 questions.</div>
+            }
+
             @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
             {
                 <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
                     <a asp-controller="Questions" asp-action="Index" asp-route-jobPositionId="@Model.Id"
                        class="btn btn-outline-danger btn-sm px-3">Manage Questions</a>
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-link text-muted btn-sm">Edit Position</a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-outline-danger btn-sm px-3">Edit Position</a>
                 </div>
             }
         </div>

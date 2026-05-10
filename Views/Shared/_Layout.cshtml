@@ -33,8 +33,35 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole("Recruiter"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-luxury" asp-controller="Quiz" asp-action="MyAttempts">My Attempts</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-luxury" asp-controller="Activity" asp-action="Index">Recent Activity</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link nav-link-luxury dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Admin" asp-action="Users">Users</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="JobPositions" asp-action="Index">All Positions</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
-                
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>

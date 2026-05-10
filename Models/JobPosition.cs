@@ -42,4 +42,10 @@ public class JobPosition
 
     [NotMapped]
     public int QuestionCount { get; set; }
+
+    [NotMapped]
+    public string? CreatedByEmail { get; set; }
+
+    [NotMapped]
+    public string? UpdatedByEmail { get; set; }
 }

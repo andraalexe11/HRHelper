@@ -1,0 +1,90 @@
+@model HRHelper.Models.QuizAttempt
+
+@{
+    ViewData["Title"] = "Quiz result";
+    var total = Model.SelectedQuestions.Count;
+    var passed = Model.Passed;
+
+    string OptionTextFor(HRHelper.Models.Question q, HRHelper.Models.AnswerOption letter) => letter switch
+    {
+        HRHelper.Models.AnswerOption.A => q.OptionA ?? string.Empty,
+        HRHelper.Models.AnswerOption.B => q.OptionB ?? string.Empty,
+        HRHelper.Models.AnswerOption.C => q.OptionC ?? string.Empty,
+        HRHelper.Models.AnswerOption.D => q.OptionD ?? string.Empty,
+        _ => string.Empty
+    };
+}
+
+<div class="container pb-5">
+    <a asp-controller="JobPositions" asp-action="Details" asp-route-id="@Model.JobPositionId"
+       class="text-muted text-decoration-none small mb-4 d-inline-block">
+        ← Back to position
+    </a>
+
+    <div class="login-card text-center mb-4">
+        <span class="section-label">Quiz Result</span>
+        <h2 class="fw-bold">@Model.JobPosition?.Title</h2>
+
+        <div class="display-1 fw-bold my-3 @(passed ? "text-success" : "text-danger")">
+            @Model.Score / @total
+        </div>
+
+        <span class="badge fs-5 px-4 py-2 @(passed ? "bg-success" : "bg-danger")">
+            @(passed ? "PASSED" : "FAILED")
+        </span>
+
+        @if (!passed)
+        {
+            <div class="mt-4">
+                <a asp-controller="Quiz" asp-action="Start" asp-route-jobPositionId="@Model.JobPositionId"
+                   class="btn-luxury-red px-4 py-2 text-decoration-none d-inline-block">
+                    Retake quiz
+                </a>
+            </div>
+        }
+    </div>
+
+    <h4 class="fw-bold mb-3">Breakdown</h4>
+
+    @{
+        var ordered = Model.SelectedQuestions.OrderBy(s => s.DisplayOrder).ToList();
+    }
+    @for (int i = 0; i < ordered.Count; i++)
+    {
+        var sq = ordered[i];
+        var question = sq.Question!;
+        var answer = Model.Answers.FirstOrDefault(a => a.QuestionId == question.Id);
+        var isCorrect = answer?.IsCorrect ?? false;
+        var picked = answer?.SelectedOption;
+
+        <div class="login-card mb-3">
+            <div class="d-flex align-items-baseline mb-2">
+                <span class="badge bg-secondary me-3">@sq.DisplayOrder</span>
+                <h6 class="fw-bold mb-0 flex-grow-1">@question.Text</h6>
+                <span class="fs-3 ms-3">@(isCorrect ? "✅" : "❌")</span>
+            </div>
+
+            <div class="ms-5 small">
+                <div class="mb-1">
+                    <span class="text-muted">Your answer:</span>
+                    @if (picked.HasValue)
+                    {
+                        <strong class="@(isCorrect ? "text-success" : "text-danger")">
+                            @picked — @OptionTextFor(question, picked.Value)
+                        </strong>
+                    }
+                    else
+                    {
+                        <em class="text-muted">No answer</em>
+                    }
+                </div>
+                <div>
+                    <span class="text-muted">Correct answer:</span>
+                    <strong class="text-success">
+                        @question.CorrectAnswer — @OptionTextFor(question, question.CorrectAnswer)
+                    </strong>
+                </div>
+            </div>
+        </div>
+    }
+</div>
