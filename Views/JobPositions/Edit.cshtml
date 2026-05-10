@@ -1,7 +1,7 @@
 ﻿@model HRHelper.Models.JobPosition
 
 @{
-    ViewData["Title"] = "Editează Poziția";
+    ViewData["Title"] = "Edit Position";
 }
 
 <div class="container pb-5">
@@ -23,8 +23,8 @@
 
                     <div class="row">
                         <div class="col-md-8 mb-3">
-                            <label asp-for="Title" class="form-label small fw-bold text-secondary">Titlu Job</label>
-                            <input asp-for="Title" class="form-control luxury-input" placeholder="ex: Java Developer" />
+                            <label asp-for="Title" class="form-label small fw-bold text-secondary">Job Title</label>
+                            <input asp-for="Title" class="form-control luxury-input" placeholder="e.g. Java Developer" />
                             <span asp-validation-for="Title" class="text-danger small"></span>
                         </div>
 
@@ -66,7 +66,7 @@
 
                     <div class="mb-4">
                         <label asp-for="Jargon" class="form-label small fw-bold text-secondary">Jargon</label>
-                        <input asp-for="Jargon" class="form-control luxury-input" placeholder="ex: API, REST, Scrum" />
+                        <input asp-for="Jargon" class="form-control luxury-input" placeholder="e.g. API, REST, Scrum" />
                         <span asp-validation-for="Jargon" class="text-danger small"></span>
                     </div>
 

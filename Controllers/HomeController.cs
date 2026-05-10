@@ -1,7 +1,8 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using HRHelper.Models;
-using HRHelper.Data; 
+using HRHelper.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRHelper.Controllers;
@@ -15,6 +16,7 @@ public class HomeController : Controller
         _context = context;
     }
 
+    [Authorize]
     public async Task<IActionResult> Index()
     {
         var positions = await _context.JobPositions.ToListAsync();

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet ef *)",
+      "Bash(dotnet tool *)",
+      "Bash(dotnet build *)",
+      "PowerShell(Get-Process -Name HRHelper -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Force)",
+      "PowerShell(Stop-Process -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(\"HRHelper processes killed \\(if any\\)\")",
+      "PowerShell(sqlcmd -S \"\\(localdb\\)\\\\mssqllocaldb\" -d HRHelper -Q \"SELECT u.Email, r.Name AS Role FROM AspNetUsers u LEFT JOIN AspNetUserRoles ur ON u.Id = ur.UserId LEFT JOIN AspNetRoles r ON ur.RoleId = r.Id;\" -W)"
+    ]
+  }
+}

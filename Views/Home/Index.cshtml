@@ -44,15 +44,15 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content" style="border-radius: 24px; border: none; padding: 20px;">
             <div class="modal-header border-0">
-                <h4 class="modal-title fw-bold">Adaugă o poziție nouă</h4>
+                <h4 class="modal-title fw-bold">Add a new position</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form asp-controller="JobPositions" asp-action="Create" method="post">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label small fw-bold">Titlu Job</label>
-                            <input name="Title" class="form-control luxury-input" required placeholder="ex: Software Developer" />
+                            <label class="form-label small fw-bold">Job Title</label>
+                            <input name="Title" class="form-control luxury-input" required placeholder="e.g. Software Developer" />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label small fw-bold">Department</label>

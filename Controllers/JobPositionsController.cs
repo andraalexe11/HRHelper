@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using HRHelper.Models;
 
 namespace HRHelper.Controllers
 {
+    [Authorize]
     public class JobPositionsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -41,29 +44,31 @@ namespace HRHelper.Controllers
             return View(jobPosition);
         }
 
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: JobPositions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Create([Bind("Id,Title,Department,Description,MustHave,Technologies,InterviewGuide,Jargon")] JobPosition jobPosition)
         {
             if (ModelState.IsValid)
             {
+                jobPosition.CreatedById = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                jobPosition.CreatedAt = DateTime.UtcNow;
+
                 _context.Add(jobPosition);
-                await _context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index", "Home");
             }
             return View(jobPosition);
         }
 
-        // GET: JobPositions/Edit/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,11 +84,9 @@ namespace HRHelper.Controllers
             return View(jobPosition);
         }
 
-        // POST: JobPositions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Department,Description,MustHave,Technologies,InterviewGuide,Jargon")] JobPosition jobPosition)
         {
             if (id != jobPosition.Id)
@@ -95,7 +98,22 @@ namespace HRHelper.Controllers
             {
                 try
                 {
-                    _context.Update(jobPosition);
+                    var existing = await _context.JobPositions.FindAsync(id);
+                    if (existing == null)
+                    {
+                        return NotFound();
+                    }
+
+                    existing.Title = jobPosition.Title;
+                    existing.Department = jobPosition.Department;
+                    existing.Description = jobPosition.Description;
+                    existing.MustHave = jobPosition.MustHave;
+                    existing.Technologies = jobPosition.Technologies;
+                    existing.InterviewGuide = jobPosition.InterviewGuide;
+                    existing.Jargon = jobPosition.Jargon;
+                    existing.UpdatedById = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    existing.UpdatedAt = DateTime.UtcNow;
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -114,7 +132,7 @@ namespace HRHelper.Controllers
             return View(jobPosition);
         }
 
-        // GET: JobPositions/Delete/5
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,9 +150,9 @@ namespace HRHelper.Controllers
             return View(jobPosition);
         }
 
-        // POST: JobPositions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var jobPosition = await _context.JobPositions.FindAsync(id);
