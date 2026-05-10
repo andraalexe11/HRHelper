@@ -46,7 +46,9 @@
             
             @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
             {
-                <div class="mt-4">
+                <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+                    <a asp-controller="Questions" asp-action="Index" asp-route-jobPositionId="@Model.Id"
+                       class="btn btn-outline-danger btn-sm px-3">Manage Questions</a>
                     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-link text-muted btn-sm">Edit Position</a>
                 </div>
             }

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRHelper.Models;
 
@@ -38,4 +39,7 @@ public class JobPosition
     public DateTime? UpdatedAt { get; set; }
 
     public List<Question> Questions { get; set; } = new();
+
+    [NotMapped]
+    public int QuestionCount { get; set; }
 }
