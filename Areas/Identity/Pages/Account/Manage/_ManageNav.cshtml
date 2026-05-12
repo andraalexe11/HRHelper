@@ -1,0 +1,34 @@
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills flex-column custom-manage-nav">
+    <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
+    <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
+    <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
+    @if (hasExternalLogins)
+    {
+        <li id="external-logins" class="nav-item mb-2"><a id="external-login" class="nav-link w-100 text-start @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+    }
+    <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
+    <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
+</ul>
+
+<style>
+    .custom-manage-nav .nav-link {
+        color: #e74c3c !important; /* Text ro?u pentru link-urile inactive */
+        border-radius: 10px;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .custom-manage-nav .nav-link:hover {
+        background-color: rgba(231, 76, 60, 0.1); /* Fundal subtil ro?u la hover */
+    }
+
+    .custom-manage-nav .nav-link.active, 
+    .custom-manage-nav .show>.nav-link {
+        background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+        color: white !important; /* Text alb pentru link-ul activ */
+        box-shadow: 0 4px 6px rgba(231, 76, 60, 0.3);
+    }
+</style>
