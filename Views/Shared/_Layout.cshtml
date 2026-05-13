@@ -18,6 +18,9 @@
     </style>
 </head>
 <body>
+    <div id="splash-screen">
+        <img src="~/iconHR.png" id="splash-logo" alt="HRHelper Logo" />
+    </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
             <div class="container">
@@ -85,3 +88,25 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<script>
+    (function () {
+        const hasSeenSplash = sessionStorage.getItem('hrelper_splash_shown');
+        const splash = document.getElementById('splash-screen');
+        const logo = document.getElementById('splash-logo');
+
+        if (!hasSeenSplash) {
+            splash.style.display = 'flex'; 
+            logo.classList.add('animate-logo');
+            setTimeout(function () {
+                splash.classList.add('splash-hidden');
+                sessionStorage.setItem('hrelper_splash_shown', 'true');
+                
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 800);
+            }, 3500);
+        } else {
+            splash.style.display = 'none';
+        }
+    })();
+</script>
