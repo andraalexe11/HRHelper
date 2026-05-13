@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-HRHelper-a841f27f-02b0-4fd6-8d7e-cd870bb9c134</UserSecretsId>
+	  <NoWarn>$(NoWarn);NU1901</NoWarn>
+	  <NuGetAudit>false</NuGetAudit>
   </PropertyGroup>
 
   <ItemGroup>

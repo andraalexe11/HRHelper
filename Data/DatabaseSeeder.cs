@@ -148,7 +148,8 @@ public static class DatabaseSeeder
                 Q("Time complexity of binary search on a sorted array?", "O(n)", "O(log n)", "O(n^2)", "O(1)", AnswerOption.B, managerId, now),
                 Q("Which SQL clause filters rows after grouping?", "WHERE", "GROUP BY", "HAVING", "ORDER BY", AnswerOption.C, managerId, now),
                 Q("What is an interface in C# used for?", "To define a contract that classes must implement", "To store data", "To execute SQL queries", "To handle exceptions", AnswerOption.A, managerId, now),
-            }
+            },
+            LearningMaterial = "SoftwareDeveloper"
         };
 
         var devops = new JobPosition
@@ -170,7 +171,8 @@ public static class DatabaseSeeder
                 Q("What is Infrastructure as Code (IaC)?", "Manually configuring servers", "Defining infrastructure in machine-readable files", "A type of database", "A monitoring strategy", AnswerOption.B, managerId, now),
                 Q("Which CLI tool manages Kubernetes clusters?", "kubectl", "docker-compose", "terraform", "ansible", AnswerOption.A, managerId, now),
                 Q("Primary purpose of a load balancer?", "To store backups", "To distribute traffic across multiple servers", "To compile code", "To monitor logs", AnswerOption.B, managerId, now),
-            }
+            },
+            LearningMaterial = "DevOpsEngineer"
         };
 
         var hr = new JobPosition
@@ -192,7 +194,9 @@ public static class DatabaseSeeder
                 Q("Which assessment best fits hiring a developer?", "Touch typing speed", "Coding challenges and technical interviews", "Public speaking", "Sales pitch", AnswerOption.B, managerId, now),
                 Q("What is 'onboarding' in HR?", "Boarding a flight", "Integrating a new employee into the company", "Issuing stocks", "Conducting an exit interview", AnswerOption.B, managerId, now),
                 Q("Which is an anti-discrimination hiring practice?", "Hiring by referral only", "Equal opportunity hiring", "Hiring only relatives", "Asking about marital status", AnswerOption.B, managerId, now),
-            }
+            },
+            LearningMaterial = "HRSpecialist"
+
         };
 
         var frontend = new JobPosition
@@ -214,7 +218,8 @@ public static class DatabaseSeeder
                 Q("What is the main benefit of the Virtual DOM?", "Storing user data", "Minimizing actual DOM updates for better rendering performance", "Replacing JavaScript", "Handling network requests", AnswerOption.B, managerId, now),
                 Q("Which HTTP method is typically used to retrieve data?", "POST", "PUT", "GET", "DELETE", AnswerOption.C, managerId, now),
                 Q("What is the role of a bundler like Webpack or Vite?", "To run the database", "To package assets and modules for the browser", "To monitor server uptime", "To compile native code", AnswerOption.B, managerId, now),
-            }
+            },
+            LearningMaterial = "FrontendDeveloper"
         };
 
         var qa = new JobPosition
@@ -236,7 +241,8 @@ public static class DatabaseSeeder
                 Q("What is the purpose of a test plan?", "To document what to test, how, and when", "To track bugs", "To deploy code", "To monitor uptime", AnswerOption.A, managerId, now),
                 Q("What is a 'flaky test'?", "A test that always passes", "A test with inconsistent results across runs", "A type of UI test", "A failing build", AnswerOption.B, managerId, now),
                 Q("Which technique gives an application unexpected inputs to find bugs?", "Smoke testing", "Fuzz testing", "Load testing", "Linting", AnswerOption.B, managerId, now),
-            }
+            },
+            LearningMaterial = "QAEngineer"
         };
 
         var recruiter = new JobPosition
@@ -258,7 +264,9 @@ public static class DatabaseSeeder
                 Q("What does 'time-to-hire' measure?", "The interview duration", "The days from job posting to candidate accepting an offer", "The time spent training new hires", "The offer validity period", AnswerOption.B, managerId, now),
                 Q("What is a 'passive candidate'?", "Someone unemployed", "A candidate not actively looking but open to opportunities", "A person rejected for a role", "A candidate who skips interviews", AnswerOption.B, managerId, now),
                 Q("Which metric tracks how many candidates progress from one stage to the next?", "Funnel conversion rate", "Bounce rate", "ROI", "NPS", AnswerOption.A, managerId, now),
-            }
+            },
+             LearningMaterial = "Recruiter"
+
         };
 
         return new List<JobPosition> { dev, devops, frontend, qa, hr, recruiter };

@@ -31,6 +31,7 @@ public class JobPosition
 
     [StringLength(4000)]
     public string? Jargon { get; set; }
+    public string? LearningMaterial { get; set; }
 
     public string? CreatedById { get; set; }
     public DateTime CreatedAt { get; set; }

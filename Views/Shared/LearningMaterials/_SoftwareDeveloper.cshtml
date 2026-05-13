@@ -1,0 +1,68 @@
+﻿@model HRHelper.Models.JobPosition
+
+<div class="learning-material-container py-3">
+    <h3 class="fw-bold mb-4" style="letter-spacing: -1px;">Software Development: Core Fundamentals</h3>
+    <p class="lead text-muted mb-5">
+        Mastering these core concepts is essential for writing efficient, maintainable, and scalable code in C# and working with modern web architectures.
+    </p>
+
+    <hr class="my-5 opacity-25">
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">1. Constants in C#: The 'const' Keyword</h5>
+        <p class="mb-3">When you have a value that should never change during the execution of the program, you use a constant.</p>
+        <div class="bg-dark text-white p-3 rounded-4 shadow-sm">
+            <p class="mb-2"><code class="text-info">const int MaxUsers = 100;</code></p>
+            <small class="text-secondary">Note: Unlike <code>readonly</code>, <code>const</code> values are evaluated at compile-time.</small>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">2. Understanding HTTP</h5>
+        <p class="mb-3">Everything on the web runs on top of this protocol. It defines how messages are formatted and transmitted.</p>
+        <div class="alert alert-secondary border-0 rounded-4">
+            <strong>HTTP</strong> stands for <strong>HyperText Transfer Protocol</strong>. It is the foundation of any data exchange on the Web and a protocol used for fetching resources such as HTML documents.
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">3. Data Structures: Stack (LIFO)</h5>
+        <p class="mb-3">Choosing the right data structure is about managing how data is accessed.</p>
+        <div class="p-3 border rounded-4 bg-light">
+            <p><strong>LIFO (Last-In, First-Out):</strong> Imagine a stack of plates. The last plate you put on top is the first one you take off. This is exactly how a <strong>Stack</strong> works.</p>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">4. Big O: Binary Search Complexity</h5>
+        <p class="mb-3">Binary search is highly efficient because it halves the search area with every step.</p>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="p-3 bg-danger text-white rounded-4 text-center">
+                    <h4 class="mb-0">O(log n)</h4>
+                    <small>Logarithmic Time</small>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <p class="small mb-0 text-muted">For a sorted array, this is much faster than a linear search O(n), especially as the data grows.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">5. SQL: The HAVING Clause</h5>
+        <p class="mb-3">Filtering data in SQL depends on <em>when</em> the filter is applied.</p>
+        <ul class="list-group list-group-flush rounded-4 shadow-sm border">
+            <li class="list-group-item"><code>WHERE</code>: Filters rows <strong>before</strong> grouping.</li>
+            <li class="list-group-item bg-light"><code>HAVING</code>: Filters groups <strong>after</strong> the <code>GROUP BY</code> clause is applied.</li>
+        </ul>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">6. Interfaces in C#</h5>
+        <p class="mb-3">Interfaces are the "Blueprints" or "Contracts" of Object-Oriented Programming.</p>
+        <div class="p-4 border-start border-danger border-5 bg-white shadow-sm rounded-2">
+            <p class="mb-0 italic">"An interface defines a <strong>contract</strong>. Any class or struct that implements that contract must provide an implementation of the members defined in the interface."</p>
+        </div>
+    </div>
+</div>

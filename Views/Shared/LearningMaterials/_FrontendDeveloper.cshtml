@@ -1,0 +1,67 @@
+﻿@model HRHelper.Models.JobPosition
+
+<div class="learning-material-container py-3">
+    <h3 class="fw-bold mb-4" style="letter-spacing: -1px;">Frontend Development: Modern UI & Frameworks</h3>
+    <p class="lead text-muted mb-5">
+        Modern frontend engineering is about building responsive, high-performance user interfaces using the latest JavaScript standards and reactive frameworks.
+    </p>
+
+    <hr class="my-5 opacity-25">
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">1. Modern JavaScript: The ES6 Revolution</h5>
+        <p class="mb-3">The 2015 update (ES6) transformed JavaScript from a scripting language into a robust tool for large-scale applications.</p>
+        <div class="bg-dark text-white p-3 rounded-4 shadow-sm">
+            <h6 class="text-secondary small fw-bold mb-2 text-uppercase">Key Feature: Arrow Functions</h6>
+            <code class="text-info">const fetchData = () => { ... }</code>
+            <p class="small mt-2 mb-0 text-muted">Introduced a more concise syntax and a lexical 'this' binding, unlike the traditional <code>function</code> keyword.</p>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">2. State Management with React Hooks</h5>
+        <p class="mb-3">Hooks allow you to use state and other React features without writing a class.</p>
+        <div class="p-4 border-start border-danger border-5 bg-light rounded-2">
+            <p class="mb-2"><strong>useState:</strong> This hook is the primary way to manage local state in functional components.</p>
+            <p class="mb-0 italic small text-muted">Execution: It returns <strong>an array with two items</strong>: the current state value and a setter function to update it.</p>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">3. Modern Layouts with Flexbox</h5>
+        <p class="mb-3">CSS Flexbox changed how we align elements and distribute space within a container.</p>
+        <div class="p-3 border rounded-4 bg-white shadow-sm d-flex align-items-center">
+            <div class="bg-dark text-white p-2 rounded me-3"><code>display: flex</code></div>
+            <div>
+                <p class="mb-0">This rule turns an element into a <strong>flex container</strong>, enabling powerful alignment properties like <code>justify-content</code> and <code>align-items</code>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">4. React Performance: Virtual DOM</h5>
+        <p class="mb-3">Updating the real browser DOM is expensive in terms of performance.</p>
+        <div class="alert alert-secondary border-0 rounded-4">
+            <strong>Benefit:</strong> The Virtual DOM is a lightweight copy of the real DOM. React uses it to <strong>minimize actual DOM updates</strong> by calculating the most efficient way to apply changes (diffing), leading to significantly better rendering performance.
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">5. Communicating with APIs: HTTP Methods</h5>
+        <p class="mb-3">Frontend apps constantly fetch data from servers using standard protocols.</p>
+        <ul class="list-group list-group-flush rounded-4 overflow-hidden shadow-sm border">
+            <li class="list-group-item"><strong>GET:</strong> Typically used to <strong>retrieve data</strong> from a server (the most common method).</li>
+            <li class="list-group-item bg-light text-muted small">POST: Used to send new data. | PUT: Used to update data.</li>
+        </ul>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">6. Modern Build Tools & Bundlers</h5>
+        <p class="mb-3">Browsers cannot natively handle thousands of separate JavaScript files and assets efficiently.</p>
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body p-4 bg-dark text-white">
+                <p class="mb-0">Tools like <strong>Webpack or Vite</strong> act as <strong>bundlers</strong>. Their role is to package all your code, modules, and assets into optimized files that the browser can load quickly.</p>
+            </div>
+        </div>
+    </div>
+</div>
