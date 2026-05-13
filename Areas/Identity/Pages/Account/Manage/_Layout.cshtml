@@ -1,0 +1,96 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="text-center mb-4">
+                <img src="https://ui-avatars.com/api/?name=User&background=random" class="rounded-circle mb-3 border border-3 border-secondary shadow" alt="Profile" style="width: 100px; height: 100px; object-fit: cover;">
+                <h4 class="fw-bold mb-0 text-dark">Manage Account</h4>
+            </div>
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col-md-9 pt-4 pt-md-0">
+            <div class="card shadow-sm border-0 h-100" style="border-radius: 15px;">
+                <div class="card-body p-4">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
+
+@section Styles {
+    <style>
+        .card-luxury {
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-luxury-red {
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
+        }
+
+        .luxury-input {
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+            padding: 10px 15px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Slight inner depth */
+        }
+
+        .luxury-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-luxury-red {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px; /* Pill-shaped button */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-luxury-red:hover {
+            background-color: #c0392b; /* Darker red on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.4);
+            color: white;
+        }
+    </style>
+}
