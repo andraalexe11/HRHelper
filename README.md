@@ -109,7 +109,7 @@ The landing page renders one of three dashboards based on role:
 ## Domain model ([Models/](Models/))
 
 ```
-ApplicationUser  : IdentityUser   FullName, IsActive, CreatedAt
+ApplicationUser  : ApplicationUser   FullName, IsActive, CreatedAt
                                   └─ roles: Admin | Manager | Recruiter
 JobPosition                       Title, Department, Description, MustHave,
                                   Technologies, InterviewGuide, Jargon,

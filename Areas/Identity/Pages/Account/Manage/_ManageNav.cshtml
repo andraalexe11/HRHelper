@@ -1,4 +1,5 @@
-@inject SignInManager<IdentityUser> SignInManager
+@using HRHelper.Models
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
@@ -6,13 +7,7 @@
     <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
     <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
     <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li id="external-logins" class="nav-item mb-2"><a id="external-login" class="nav-link w-100 text-start @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
-    }
-    <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="nav-item mb-2"><a class="nav-link w-100 text-start @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
-</ul>
+   </ul>
 
 <style>
     .custom-manage-nav .nav-link {
