@@ -1,0 +1,74 @@
+﻿@model HRHelper.Models.JobPosition
+
+<div class="learning-material-container py-3">
+    <h3 class="fw-bold mb-4" style="letter-spacing: -1px;">Quality Assurance: Testing Strategies & Reliability</h3>
+    <p class="lead text-muted mb-5">
+        Software testing is the process of evaluating a system to identify gaps, errors, or missing requirements. A robust QA strategy ensures that every release meets the highest standards of stability.
+    </p>
+
+    <hr class="my-5 opacity-25">
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">1. The Testing Pyramid: Unit vs. Integration</h5>
+        <p class="mb-3">Different tests have different scopes. Understanding where to focus is key to efficient QA.</p>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="p-3 bg-light rounded-4 border-top border-danger border-4 h-100 shadow-sm">
+                    <h6><strong>Unit Testing</strong></h6>
+                    <p class="small mb-0 text-muted">Verifies individual components or functions in total <strong>isolation</strong>. They are fast and numerous.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 bg-dark text-white rounded-4 h-100 shadow-sm">
+                    <h6 class="text-danger"><strong>Integration Testing</strong></h6>
+                    <p class="small mb-0">Verifies how different components or services <strong>work together</strong> as a group to ensure data flows correctly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">2. Testing Frameworks for .NET</h5>
+        <p class="mb-3">For developers and QA engineers in the Microsoft ecosystem, specific tools are industry standards.</p>
+        <div class="p-4 border rounded-4 bg-white shadow-sm d-flex align-items-center">
+            <div class="bg-danger text-white px-3 py-2 rounded-pill me-3 fw-bold">xUnit</div>
+            <div>
+                <p class="mb-0">While tools like NUnit or MSTest exist, <strong>xUnit</strong> is currently the most modern and commonly used testing framework for .NET applications.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">3. Safeguarding with Regression Testing</h5>
+        <p class="mb-3">Every time code changes, there is a risk that existing features might break.</p>
+        <div class="alert alert-secondary border-0 rounded-4 shadow-sm">
+            <strong>Definition:</strong> <strong>Regression testing</strong> involves re-testing existing features after new changes or bug fixes to ensure that the existing functionality remains intact and "hasn't regressed."
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">4. The Roadmap: The Test Plan</h5>
+        <p class="mb-3">Testing without a plan leads to missed bugs and wasted time.</p>
+        <div class="p-3 border-start border-danger border-5 bg-light rounded-2">
+            <p class="mb-0">A <strong>Test Plan</strong> is a formal document that outlines the <strong>strategy, objectives, resources, and schedule</strong> for a particular testing project. It defines <em>what</em> to test, <em>how</em> to test it, and <em>when</em>.</p>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">5. The Enemy of Trust: Flaky Tests</h5>
+        <p class="mb-3">A test suite is only useful if its results are trustworthy.</p>
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body p-4 bg-dark text-white">
+                <p class="mb-0">A <strong>Flaky Test</strong> is a test that yields <strong>inconsistent results</strong> (passing and failing) across multiple runs without any changes to the underlying code. They are dangerous because they hide real bugs.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">6. Advanced Techniques: Fuzz Testing</h5>
+        <p class="mb-3">Sometimes, the best way to find a bug is to be unpredictable.</p>
+        <div class="p-4 border rounded-4 bg-white shadow-sm border-top border-5 border-danger">
+            <p class="mb-0"><strong>Fuzz Testing</strong> (or Fuzzing) is a technique that involves providing <strong>invalid, unexpected, or random data</strong> as inputs to a program to find crashes, memory leaks, or security vulnerabilities.</p>
+        </div>
+    </div>
+</div>

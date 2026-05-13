@@ -1,0 +1,126 @@
+@model HRHelper.Models.ManagerDashboardVm
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-end mb-3">
+        <div>
+            <span class="section-label">Manager</span>
+            <h2 class="fw-bold mb-0">My Positions</h2>
+            <p class="text-muted small mb-0">@Model.MyPositions.Count position@(Model.MyPositions.Count == 1 ? "" : "s") you own</p>
+        </div>
+        <button type="button" class="btn-luxury-red px-4 py-2" data-bs-toggle="modal" data-bs-target="#addJobModal">
+            + Add Position
+        </button>
+    </div>
+
+    @if (Model.MyPositions.Count == 0)
+    {
+        <div class="text-center py-5 border rounded-4 bg-light mb-5">
+            <h4 class="text-muted fw-light">You haven't created any positions yet.</h4>
+            <p class="text-secondary">Click "Add Position" to get started.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4 mb-5">
+            @foreach (var p in Model.MyPositions)
+            {
+                var ready = p.QuestionCount >= 5;
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm job-card-luxury @(p.Department == "IT" ? "card-it-luxury text-white" : "card-hr-luxury text-white")">
+                        <div class="card-body d-flex flex-column p-4">
+                            <span class="badge mb-2">@p.Department</span>
+                            <h3 class="fw-bold">@p.Title</h3>
+                            <div class="small mb-3">
+                                <span class="badge @(ready ? "bg-light text-success" : "bg-light text-danger") me-1">
+                                    @p.QuestionCount question@(p.QuestionCount == 1 ? "" : "s")
+                                </span>
+                                <span class="badge bg-light text-dark">
+                                    @p.AttemptCount attempt@(p.AttemptCount == 1 ? "" : "s")
+                                </span>
+                            </div>
+                            <a href="@Url.Action("Details", "JobPositions", new { id = p.Id })"
+                               class="text-white mt-auto text-decoration-none text-center">Details→</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (Model.NeedsAttention.Count > 0)
+    {
+        <div class="alert alert-warning mb-5">
+            <h5 class="fw-bold">⚠ Needs Attention</h5>
+            <p class="small mb-3">These positions don't have enough questions to launch a quiz (min. 5):</p>
+            <ul class="mb-0">
+                @foreach (var p in Model.NeedsAttention)
+                {
+                    <li class="mb-1">
+                        <a asp-controller="Questions" asp-action="Index" asp-route-jobPositionId="@p.Id"
+                           class="text-decoration-none fw-bold text-dark">@p.Title</a>
+                        <span class="text-muted small">— @p.QuestionCount / 5 questions</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+</div>
+
+<div class="modal fade" id="addJobModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 24px; border: none; padding: 20px;">
+            <div class="modal-header border-0">
+                <h4 class="modal-title fw-bold">Add a new position</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="JobPositions" asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Job Title</label>
+                            <input name="Title" class="form-control luxury-input" required placeholder="e.g. Software Developer" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Department</label>
+                            <select name="Department" class="form-select luxury-input">
+                                <option value="IT">IT</option>
+                                <option value="HR">HR</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Description</label>
+                        <textarea name="Description" class="form-control luxury-input" rows="3" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Must Have</label>
+                            <textarea name="MustHave" class="form-control luxury-input" rows="2"></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold">Technologies</label>
+                            <textarea name="Technologies" class="form-control luxury-input" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Interview Guide</label>
+                        <textarea name="InterviewGuide" class="form-control luxury-input" rows="2"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn-luxury-red w-100">Save Position</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

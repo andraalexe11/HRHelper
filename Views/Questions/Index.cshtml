@@ -1,0 +1,92 @@
+@model IEnumerable<HRHelper.Models.Question>
+
+@{
+    var position = (HRHelper.Models.JobPosition)ViewBag.JobPosition;
+    int minRequired = ViewBag.MinQuestionsForQuiz;
+    int count = Model?.Count() ?? 0;
+    bool ready = count >= minRequired;
+    ViewData["Title"] = $"Questions — {position.Title}";
+}
+
+<div class="container pb-5">
+    <a asp-controller="JobPositions" asp-action="Details" asp-route-id="@position.Id"
+       class="text-muted text-decoration-none small mb-4 d-inline-block">
+        ← Back to position
+    </a>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+        <div>
+            <span class="section-label">Question Bank</span>
+            <h2 class="fw-bold mb-1">@position.Title</h2>
+            <span class="badge @(position.Department == "IT" ? "bg-dark text-white" : "bg-danger text-white")">
+                @position.Department
+            </span>
+        </div>
+        <a asp-controller="Questions" asp-action="Create" asp-route-jobPositionId="@position.Id"
+           class="btn-luxury-red px-4 py-2 text-decoration-none mt-3">
+            + Add Question
+        </a>
+    </div>
+
+    <div class="alert @(ready ? "alert-success" : "alert-warning") d-flex justify-content-between align-items-center mb-4"
+         role="status">
+        <div>
+            <strong>@count / @minRequired questions ready</strong>
+            <span class="ms-2 small">
+                @(ready ? "Quiz is ready to launch." : $"At least {minRequired} questions are required to enable the quiz.")
+            </span>
+        </div>
+        <span class="fs-3 fw-bold">@(ready ? "✓" : "!")</span>
+    </div>
+
+    @if (count == 0)
+    {
+        <div class="text-center py-5 border rounded-4 bg-light">
+            <h4 class="text-muted fw-light">No questions yet.</h4>
+            <p class="text-secondary mb-4">Start by adding the first question for this position.</p>
+            <a asp-controller="Questions" asp-action="Create" asp-route-jobPositionId="@position.Id"
+               class="btn-luxury-red px-4 py-2 text-decoration-none">
+                + Add the first question
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr class="text-secondary small text-uppercase">
+                        <th style="width: 50px;">#</th>
+                        <th>Question</th>
+                        <th style="width: 100px;">Correct</th>
+                        <th style="width: 180px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 1; }
+                    @foreach (var q in Model!)
+                    {
+                        <tr>
+                            <td class="text-muted">@i</td>
+                            <td class="fw-semibold">@q.Text</td>
+                            <td>
+                                <span class="badge bg-success">@q.CorrectAnswer</span>
+                            </td>
+                            <td class="text-end">
+                                <a asp-controller="Questions" asp-action="Edit" asp-route-id="@q.Id"
+                                   class="btn btn-link btn-sm text-secondary text-decoration-none">Edit</a>
+                                <form asp-controller="Questions" asp-action="Delete" asp-route-id="@q.Id"
+                                      method="post" class="d-inline"
+                                      onsubmit="return confirm('Delete this question?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-link btn-sm text-danger text-decoration-none">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

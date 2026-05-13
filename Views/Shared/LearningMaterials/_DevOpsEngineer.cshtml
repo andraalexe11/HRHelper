@@ -1,0 +1,79 @@
+﻿@model HRHelper.Models.JobPosition
+<div class="learning-material-container py-3">
+    <h3 class="fw-bold mb-4" style="letter-spacing: -1px;">DevOps Essentials: Study Guide</h3>
+    <p class="lead text-muted mb-5">
+        This guide covers the fundamental concepts of modern infrastructure and automation.
+        Understanding these topics is crucial for anyone looking to bridge the gap between development and operations.
+    </p>
+
+    <hr class="my-5 opacity-25">
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">1. Automation & Pipelines: CI/CD</h5>
+        <p class="mb-3">Continuous Integration and Continuous Deployment (CI/CD) is the backbone of modern software delivery.</p>
+        <div class="bg-light p-3 rounded-4 border-start border-danger border-4 shadow-sm">
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2"><strong>What it stands for:</strong> Continuous Integration / Continuous Deployment.</li>
+                <li><strong>The Goal:</strong> To automate the process of building, testing, and deploying code changes so that software can be released more frequently and reliably.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">2. Containerization with Docker</h5>
+        <p class="mb-3">Containers allow developers to package an application with all of its dependencies into a single unit.</p>
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body bg-dark text-white p-4">
+                <h6 class="text-secondary small fw-bold text-uppercase mb-2">Defining the Image</h6>
+                <p class="mb-0">
+                    To create a Docker image, you use a special text file called a <code class="text-danger">Dockerfile</code>.
+                    It contains the step-by-step instructions (the "recipe") for building the container.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">3. Scaling with Container Orchestration</h5>
+        <p class="mb-3">When you have hundreds of containers running, you need a system to manage them, handle failures, and scale them automatically.</p>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="p-3 border rounded-4 h-100">
+                    <span class="badge bg-danger mb-2">The Standard Tool</span>
+                    <p class="small mb-0"><strong>Kubernetes</strong> (often abbreviated as K8s) is the most widely used tool for container orchestration.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded-4 h-100">
+                    <span class="badge bg-dark mb-2">Management</span>
+                    <p class="small mb-0">To interact with a Kubernetes cluster from your terminal, you use the CLI tool called <code class="text-danger">kubectl</code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">4. Infrastructure as Code (IaC)</h5>
+        <p class="mb-3">In the past, servers were set up manually. Today, we treat infrastructure like software.</p>
+        <p><strong>Definition:</strong> Infrastructure as Code (IaC) is the practice of managing and provisioning infrastructure through machine-readable definition files (like YAML or JSON) rather than manual hardware configuration.</p>
+        <div class="alert alert-success border-0 rounded-4 d-flex align-items-center">
+            <i class="bi bi-check-circle-fill me-3 fs-4"></i>
+            <div><strong>Benefit:</strong> This makes environments consistent, repeatable, and easy to version control with Git.</div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h5 class="text-danger fw-bold mb-3">5. High Availability: Load Balancing</h5>
+        <p class="mb-3">No single server should be a single point of failure.</p>
+        <ul class="list-group list-group-flush rounded-4 overflow-hidden shadow-sm">
+            <li class="list-group-item p-3">
+                <span class="fw-bold d-block text-secondary small">Primary Purpose</span>
+                The main goal of a Load Balancer is to distribute incoming network traffic across multiple servers.
+            </li>
+            <li class="list-group-item p-3">
+                <span class="fw-bold d-block text-secondary small">Result</span>
+                This ensures that no single server is overwhelmed, improves performance, and keeps the system online even if one server fails.
+            </li>
+        </ul>
+    </div>
+</div>

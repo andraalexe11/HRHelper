@@ -1,0 +1,84 @@
+@model HRHelper.Models.Question
+
+@{
+    var position = (HRHelper.Models.JobPosition)ViewBag.JobPosition;
+    ViewData["Title"] = $"Add Question — {position.Title}";
+}
+
+<div class="container pb-5">
+    <a asp-controller="Questions" asp-action="Index" asp-route-jobPositionId="@position.Id"
+       class="text-muted text-decoration-none small mb-4 d-inline-block">
+        ← Back to questions
+    </a>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="login-card">
+                <div class="text-center mb-4">
+                    <span class="section-label">Question Bank</span>
+                    <h2 class="fw-bold">Add Question</h2>
+                    <p class="text-muted small mb-0">for @position.Title</p>
+                </div>
+
+                <form asp-controller="Questions" asp-action="Create" asp-route-jobPositionId="@position.Id" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+                    <input type="hidden" asp-for="JobPositionId" />
+
+                    <div class="mb-3">
+                        <label asp-for="Text" class="form-label small fw-bold text-secondary">Question</label>
+                        <textarea asp-for="Text" class="form-control luxury-input" rows="3"
+                                  placeholder="e.g. What is the difference between let and var in JavaScript?"></textarea>
+                        <span asp-validation-for="Text" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="OptionA" class="form-label small fw-bold text-secondary">Option A</label>
+                            <input asp-for="OptionA" class="form-control luxury-input" />
+                            <span asp-validation-for="OptionA" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="OptionB" class="form-label small fw-bold text-secondary">Option B</label>
+                            <input asp-for="OptionB" class="form-control luxury-input" />
+                            <span asp-validation-for="OptionB" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="OptionC" class="form-label small fw-bold text-secondary">Option C</label>
+                            <input asp-for="OptionC" class="form-control luxury-input" />
+                            <span asp-validation-for="OptionC" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="OptionD" class="form-label small fw-bold text-secondary">Option D</label>
+                            <input asp-for="OptionD" class="form-control luxury-input" />
+                            <span asp-validation-for="OptionD" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-secondary d-block mb-2">Correct Answer</label>
+                        <div class="btn-group" role="group" aria-label="Correct answer">
+                            @foreach (var opt in Enum.GetValues<HRHelper.Models.AnswerOption>())
+                            {
+                                var id = $"correct{opt}";
+                                <input type="radio" class="btn-check" name="CorrectAnswer" id="@id" value="@opt"
+                                       checked="@(Model.CorrectAnswer == opt)" required />
+                                <label class="btn btn-outline-danger" for="@id">@opt</label>
+                            }
+                        </div>
+                        <span asp-validation-for="CorrectAnswer" class="text-danger small d-block mt-2"></span>
+                    </div>
+
+                    <div class="pt-3">
+                        <button type="submit" class="btn-luxury-red w-100 py-3">Save Question</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

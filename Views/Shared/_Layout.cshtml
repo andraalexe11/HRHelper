@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HRHelper</title>
+    <link rel="icon" type="image/png" href="~/iconHR.png" asp-append-version="true" />
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -18,12 +19,15 @@
     </style>
 </head>
 <body>
+    <div id="splash-screen">
+        <img src="~/iconHR.png" id="splash-logo" alt="HRHelper Logo" />
+    </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
             <div class="container">
                 <a class="navbar-brand fw-bold text-danger" asp-area="" asp-controller="Home" asp-action="Index">
                     <div class="brand-logo mb-0">
-                        HR<span class="brand-dot">elper</span>
+                        HR<span class="brand-dot">Helper</span>
                     </div>
                 </a>
             
@@ -34,8 +38,35 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @if (User.IsInRole("Recruiter"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-luxury" asp-controller="Quiz" asp-action="MyAttempts">My Attempts</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-luxury" asp-controller="Activity" asp-action="Index">Recent Activity</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link nav-link-luxury dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Admin" asp-action="Users">Users</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="JobPositions" asp-action="Index">All Positions</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
-                
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -58,3 +89,25 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<script>
+    (function () {
+        const hasSeenSplash = sessionStorage.getItem('hrelper_splash_shown');
+        const splash = document.getElementById('splash-screen');
+        const logo = document.getElementById('splash-logo');
+
+        if (!hasSeenSplash) {
+            splash.style.display = 'flex'; 
+            logo.classList.add('animate-logo');
+            setTimeout(function () {
+                splash.classList.add('splash-hidden');
+                sessionStorage.setItem('hrelper_splash_shown', 'true');
+                
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 800);
+            }, 3500);
+        } else {
+            splash.style.display = 'none';
+        }
+    })();
+</script>

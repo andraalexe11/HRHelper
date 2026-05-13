@@ -1,0 +1,60 @@
+@model HRHelper.Models.CreateUserViewModel
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<div class="container pb-5">
+    <a asp-controller="Admin" asp-action="Users" class="text-muted text-decoration-none small mb-4 d-inline-block">
+        ← Back to users
+    </a>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="login-card">
+                <div class="text-center mb-4">
+                    <span class="section-label">Administration</span>
+                    <h2 class="fw-bold">Create User</h2>
+                    <p class="text-muted small mb-0">A temporary password will be generated and shown once.</p>
+                </div>
+
+                <form asp-controller="Admin" asp-action="CreateUser" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label small fw-bold text-secondary">Email</label>
+                        <input asp-for="Email" class="form-control luxury-input" autocomplete="off" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label small fw-bold text-secondary">Full Name (optional)</label>
+                        <input asp-for="FullName" class="form-control luxury-input" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Role" class="form-label small fw-bold text-secondary">Role</label>
+                        <select asp-for="Role" class="form-select luxury-input">
+                            @foreach (var r in Model.AllRoles)
+                            {
+                                <option value="@r">@r</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger small"></span>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="btn-luxury-red w-100 py-3">Create User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

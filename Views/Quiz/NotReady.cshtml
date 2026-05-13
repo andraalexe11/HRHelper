@@ -1,0 +1,26 @@
+@{
+    var position = (HRHelper.Models.JobPosition)ViewBag.JobPosition;
+    int available = ViewBag.AvailableQuestions;
+    int min = ViewBag.MinRequired;
+    ViewData["Title"] = "Quiz not ready";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="login-card text-center">
+                <div class="display-1 fw-light text-secondary mb-3">⏳</div>
+                <span class="section-label">Quiz Status</span>
+                <h2 class="fw-bold mb-3">This quiz isn't ready yet</h2>
+                <p class="text-muted mb-4">
+                    The position <strong>@position.Title</strong> currently has @available question@(available == 1 ? "" : "s"),
+                    but at least <strong>@min</strong> are required to launch a quiz.
+                </p>
+                <a asp-controller="JobPositions" asp-action="Details" asp-route-id="@position.Id"
+                   class="btn-luxury-red px-4 py-2 text-decoration-none d-inline-block">
+                    ← Back to position
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

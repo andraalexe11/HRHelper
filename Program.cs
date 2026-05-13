@@ -1,4 +1,5 @@
 using HRHelper.Data;
+using HRHelper.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) // Mult mai ușor pentru testare
-    .AddRoles<IdentityRole>() 
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -46,26 +47,7 @@ app.MapRazorPages()
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    try
-    {
-        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-        string[] roleNames = { "Admin", "Manager", "Recruiter" };
-
-        foreach (var roleName in roleNames)
-        {
-            var roleExist = await roleManager.RoleExistsAsync(roleName);
-            if (!roleExist)
-            {
-                await roleManager.CreateAsync(new IdentityRole(roleName));
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.Message);
-    }
+    await DatabaseSeeder.SeedAsync(scope.ServiceProvider, app.Configuration);
 }
 
 app.Run();

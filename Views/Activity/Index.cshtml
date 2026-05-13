@@ -1,0 +1,85 @@
+@model IEnumerable<HRHelper.Models.AttemptSummary>
+
+@{
+    ViewData["Title"] = "Recent Activity";
+    bool isAdmin = ViewBag.IsAdmin;
+    int limit = ViewBag.RecentLimit;
+}
+
+<div class="container pb-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+        <div>
+            <span class="section-label">@(isAdmin ? "System" : "My Positions")</span>
+            <h2 class="fw-bold mb-0">Recent Activity</h2>
+            <p class="text-muted small mb-0">
+                @if (isAdmin)
+                {
+                    <span>All quiz attempts across the system.</span>
+                }
+                else
+                {
+                    <span>Quiz attempts on positions you own.</span>
+                }
+                <span>Showing the latest @limit.</span>
+            </p>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 border rounded-4 bg-light">
+            <h5 class="text-muted fw-light">No quiz activity yet.</h5>
+            <p class="text-secondary mb-0">Recruiter attempts will show up here once they start taking quizzes.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="text-secondary small text-uppercase">
+                    <tr>
+                        <th>Recruiter</th>
+                        <th>Position</th>
+                        <th>Score</th>
+                        <th>Result</th>
+                        <th>Date</th>
+                        @if (isAdmin)
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@(a.RecruiterEmail ?? "—")</td>
+                            <td class="text-muted">@a.PositionTitle</td>
+                            <td><strong>@a.Score / 3</strong></td>
+                            <td>
+                                @if (a.Passed)
+                                {
+                                    <span class="badge bg-success">Passed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Failed</span>
+                                }
+                            </td>
+                            <td class="text-muted small">
+                                @(a.CompletedAt?.ToLocalTime().ToString("yyyy-MM-dd HH:mm") ?? "—")
+                            </td>
+                            @if (isAdmin)
+                            {
+                                <td class="text-end">
+                                    <a asp-controller="Quiz" asp-action="Result" asp-route-attemptId="@a.AttemptId"
+                                       class="btn btn-link btn-sm text-secondary text-decoration-none">View</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

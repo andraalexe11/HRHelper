@@ -1,71 +1,116 @@
-﻿@model IEnumerable<HRHelper.Models.JobPosition>
+@model IEnumerable<HRHelper.Models.JobPositionListItem>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All Positions";
+    string? q = ViewBag.Q;
+    string? department = ViewBag.Department;
+    int total = Model.Count();
 }
 
-<h1>Index</h1>
+<div class="container pb-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+        <div>
+            <span class="section-label">Catalog</span>
+            <h2 class="fw-bold mb-0">All Positions</h2>
+            <p class="text-muted small mb-0">@total result@(total == 1 ? "" : "s")</p>
+        </div>
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <a asp-action="Create" class="btn-luxury-red px-4 py-2 text-decoration-none">+ New Position</a>
+        }
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Department)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MustHave)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Technologies)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InterviewGuide)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Jargon)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MustHave)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Technologies)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InterviewGuide)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Jargon)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <form method="get" class="row g-3 mb-4 align-items-end">
+        <div class="col-md-6">
+            <label class="form-label small fw-bold text-secondary">Search</label>
+            <input type="text" name="q" value="@q" class="form-control luxury-input" placeholder="title contains..." />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label small fw-bold text-secondary">Department</label>
+            <select name="department" class="form-select luxury-input">
+                <option value="">All departments</option>
+                <option value="IT" selected="@(department == "IT")">IT</option>
+                <option value="HR" selected="@(department == "HR")">HR</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-danger w-100">Filter</button>
+        </div>
+    </form>
+
+    @if (total == 0)
+    {
+        <div class="text-center py-5 border rounded-4 bg-light">
+            <h5 class="text-muted fw-light">No positions match your filters.</h5>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="text-secondary small text-uppercase">
+                    <tr>
+                        <th>Title</th>
+                        <th>Department</th>
+                        <th>Questions</th>
+                        <th>Attempts</th>
+                        <th>Created</th>
+                        <th>Last Edited</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model)
+                    {
+                        var ready = p.QuestionCount >= 5;
+                        <tr>
+                            <td class="fw-semibold">
+                                <a asp-action="Details" asp-route-id="@p.Id"
+                                   class="text-decoration-none text-dark">@p.Title</a>
+                            </td>
+                            <td>
+                                <span class="badge @(p.Department == "IT" ? "bg-dark" : "bg-danger")">@p.Department</span>
+                            </td>
+                            <td>
+                                <span class="@(ready ? "text-success" : "text-danger") fw-bold">@p.QuestionCount</span>
+                                <span class="text-muted small">/ 5</span>
+                            </td>
+                            <td>@p.AttemptCount</td>
+                            <td class="small text-muted">
+                                @p.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd")
+                                @if (!string.IsNullOrEmpty(p.CreatedByEmail))
+                                {
+                                    <br /><span>by @p.CreatedByEmail</span>
+                                }
+                            </td>
+                            <td class="small text-muted">
+                                @if (p.UpdatedAt.HasValue)
+                                {
+                                    <span>@p.UpdatedAt.Value.ToLocalTime().ToString("yyyy-MM-dd")</span>
+                                    @if (!string.IsNullOrEmpty(p.UpdatedByEmail))
+                                    {
+                                        <br />
+                                        <span>by @p.UpdatedByEmail</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>—</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a asp-action="Details" asp-route-id="@p.Id"
+                                   class="btn btn-link btn-sm text-secondary text-decoration-none">Details</a>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@p.Id"
+                                       class="btn btn-link btn-sm text-secondary text-decoration-none">Edit</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

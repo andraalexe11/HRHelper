@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Alătură-te echipei";
+    ViewData["Title"] = "Join the team";
 }
 
 <div class="container">
@@ -9,7 +9,7 @@
         <div class="col-md-5">
             <div class="login-card text-center">
                 <div class="brand-logo">
-                    HR<span class="brand-dot">elper</span>
+                    HR<span class="brand-dot">Helper</span>
                 </div>
 
                 <h4 class="mb-4 fw-light text-secondary">Create a new account!</h4>
@@ -35,17 +35,8 @@
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
                     </div>
 
-                    <div class="form-floating mb-4">
-                        <select asp-for="Input.Role" class="form-select" aria-required="true">
-                            <option value="Recruiter">Recruiter</option>
-                            <option value="Manager">Manager</option>
-                        </select>
-                        <label asp-for="Input.Role">Your role:</label>
-                        <span asp-validation-for="Input.Role" class="text-danger small"></span>
-                    </div>
-
                     <button id="registerSubmit" type="submit" class="btn-luxury-red w-100 mb-3">
-                        Creează Cont
+                        Create Account
                     </button>
 
                     <div class="text-center small mt-3">
